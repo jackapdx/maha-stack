@@ -26,25 +26,30 @@ async function walkDir(dir: string): Promise<string[]> {
 }
 
 async function processEtaFile(
-  filePath: string,
+  filePath2: string,
   context: TemplateContext,
 ): Promise<EtaFileResult> {
-  const raw = await readFile(filePath, 'utf-8');
-  const rendered = eta.renderString(raw, context);
+  try {
+    const raw = await readFile(filePath2, 'utf-8');
+    const rendered = eta.renderString(raw, context);
 
-  const isEta = extname(filePath) === ETA_EXTENSION;
-  const targetPath = isEta ? filePath.slice(0, -ETA_EXTENSION.length) : filePath;
+    const isEta = extname(filePath2) === ETA_EXTENSION;
+    const targetPath = isEta ? filePath2.slice(0, -ETA_EXTENSION.length) : filePath2;
 
-  await writeFile(targetPath, rendered, 'utf-8');
+    await writeFile(targetPath, rendered, 'utf-8');
 
-  if (isEta) {
-    await unlink(filePath);
+    if (isEta) {
+      await unlink(filePath2);
+    }
+
+    return {
+      originalPath: filePath2,
+      renderedPath: targetPath,
+    };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`Failed to render ${filePath2}: ${message}`);
   }
-
-  return {
-    originalPath: filePath,
-    renderedPath: targetPath,
-  };
 }
 
 export async function renderTemplates(
@@ -65,10 +70,17 @@ export async function renderTemplates(
 
   for (let i = 0; i < filesToProcess.length; i += CONCURRENCY) {
     const batch = filesToProcess.slice(i, i + CONCURRENCY);
-    const batchResults = await Promise.all(
+    const settled = await Promise.allSettled(
       batch.map((filePath) => processEtaFile(filePath, context)),
     );
-    results.push(...batchResults);
+    for (const result of settled) {
+      if (result.status === 'fulfilled') {
+        results.push(result.value);
+      } else {
+        // Log the error but continue processing remaining files
+        console.error(`  ⚠️ ${result.reason instanceof Error ? result.reason.message : String(result.reason)}`);
+      }
+    }
   }
 
   return results;
