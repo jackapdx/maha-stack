@@ -13,18 +13,10 @@ export function provideTrpcClient() {
 
 /**
  * Safely resolve the API base URL from environment variables.
- * Works in both Node (process.env) and browser (Vite import.meta.env).
+ * Works in both Node (process.env) and Angular build-time injection.
  */
 function getApiBaseUrl(): string {
-  // Browser: Vite injects import.meta.env
-  try {
-    const viteApiUrl = import.meta.env?.['VITE_API_URL'];
-    if (viteApiUrl) return viteApiUrl;
-  } catch {
-    // Not in a Vite environment
-  }
-
-  // Node: process.env
+  // Browser / Angular: process.env with safe typeof check
   if (typeof process !== 'undefined' && process.env?.['API_URL']) {
     return process.env['API_URL']!;
   }
