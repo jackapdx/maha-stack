@@ -1,0 +1,76 @@
+import { Injectable } from '@angular/core';
+import { httpBatchLink } from '@trpc/client';
+import { createTRPCProxyClient } from '@trpc/client';
+import type { AppRouter } from '../../api/src/trpc/trpc.router';
+
+export function provideTrpcClient() {
+  return {
+    provide: TrpcService,
+    useFactory: () => new TrpcService(),
+    deps: [],
+  };
+}
+
+/**
+ * Safely resolve the API base URL from environment variables.
+ * Works in both Node (process.env) and browser (Vite import.meta.env).
+ */
+function getApiBaseUrl(): string {
+  // Browser: Vite injects import.meta.env
+  try {
+    const viteApiUrl = import.meta.env?.['VITE_API_URL'];
+    if (viteApiUrl) return viteApiUrl;
+  } catch {
+    // Not in a Vite environment
+  }
+
+  // Node: process.env
+  if (typeof process !== 'undefined' && process.env?.['API_URL']) {
+    return process.env['API_URL']!;
+  }
+
+  return 'http://localhost:3000';
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class TrpcService {
+  public client = createTRPCProxyClient<AppRouter>({
+    links: [
+      httpBatchLink({
+        url: `${getApiBaseUrl()}/trpc`,
+        fetch: (url, options) => {
+          return fetch(url, {
+            ...options,
+            credentials: 'include',
+          });
+        },
+      }),
+    ],
+  });
+
+  async getHealth() {
+    return this.client.health.query();
+  }
+
+  async getUsers() {
+    return this.client.users.list.query();
+  }
+
+  async getUser(id: string) {
+    return this.client.users.get.query({ id });
+  }
+
+  async createUser(data: { name: string; email: string; role: 'user' | 'admin' }) {
+    return this.client.users.create.mutate(data);
+  }
+
+  async login(email: string, password: string) {
+    return this.client.auth.login.mutate({ email, password });
+  }
+
+  async register(name: string, email: string, password: string) {
+    return this.client.auth.register.mutate({ name, email, password });
+  }
+}

@@ -1,0 +1,105 @@
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  template: `
+    <!-- Hero -->
+    <section
+      class="min-h-[90vh] flex items-center justify-center px-4"
+      style="background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 30%, #FFE082 60%, #FFD54F 100%)"
+    >
+      <div class="text-center max-w-3xl animate-maha-slide-up">
+        <div class="text-5xl mb-6">🔱</div>
+        <h1 class="text-5xl sm:text-6xl font-bold text-surface-900 mb-4 tracking-tight">
+          <span class="bg-gradient-to-r from-maha-600 via-maha-700 to-maha-800 bg-clip-text text-transparent">
+            Maha Stack
+          </span>
+        </h1>
+        <p class="text-xl text-surface-700 mb-2 font-medium">The "Great" Stack Generator</p>
+        <p class="text-surface-500 mb-8 text-base">High-performance monorepos, M4-optimized</p>
+        <div class="flex items-center justify-center gap-4 mb-12">
+          <a href="https://github.com/your-username/create-maha-stack" target="_blank" class="mha-btn mha-btn-primary mha-btn-lg">
+            Get Started
+          </a>
+          <a href="#" class="mha-btn mha-btn-outline mha-btn-lg">
+            Documentation
+          </a>
+        </div>
+        <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto text-center">
+          @for (item of heroMetrics(); track item.label) {
+            <div
+              class="bg-white/60 backdrop-blur rounded-lg p-4 animate-maha-fade-in"
+              [style.animation-delay]="item.delay"
+            >
+              <div class="text-2xl font-bold text-surface-900">{{ item.icon }}</div>
+              <div class="text-xs text-surface-500 mt-1">{{ item.label }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-24 px-4 bg-surface-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-surface-900 mb-4">
+            Two Paths, One <span class="text-maha-700">Foundation</span>
+          </h2>
+          <p class="text-surface-500 max-w-2xl mx-auto">
+            Choose your stack, share the design system. Both paths share the same UI tokens and component CSS.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          @for (item of features(); track item.title) {
+            <div
+              class="mha-card animate-maha-fade-in"
+              [style.animation-delay]="item.delay"
+            >
+              <div class="mha-card-body">
+                <div class="text-3xl mb-4">{{ item.icon }}</div>
+                <h3 class="mha-card-title mb-2">{{ item.title }}</h3>
+                <span class="mha-badge mha-badge-sm mha-badge-primary">{{ item.tag }}</span>
+                <p class="text-sm text-surface-500 mt-3 leading-relaxed">{{ item.desc }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  `,
+  styles: [],
+})
+export class HomeComponent {
+  heroMetrics = signal([
+    { icon: '⚡', label: 'Speed', delay: '0ms' },
+    { icon: '🏗️', label: 'Scale', delay: '150ms' },
+    { icon: '🤖', label: 'AI-Ready', delay: '300ms' },
+  ]);
+
+  features = signal([
+    {
+      icon: '⚡',
+      title: 'Maha-Perf',
+      desc: 'Modern speed stack — Hono + React 19 + Arktype, optimized for M4 MacBook Air with Bun runtime.',
+      tag: 'Performance',
+      delay: '0ms',
+    },
+    {
+      icon: '🏗️',
+      title: 'Maha-Grand',
+      desc: 'Enterprise scale — NestJS + Angular 21 + Zod with Nx monorepo and zoneless change detection.',
+      tag: 'Enterprise',
+      delay: '100ms',
+    },
+    {
+      icon: '🤖',
+      title: 'AI-First Design',
+      desc: 'Every project ships with CLAUDE.md, .geminiignore, and agent-friendly structural conventions.',
+      tag: 'Agentic',
+      delay: '200ms',
+    },
+  ]);
+}

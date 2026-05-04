@@ -1,0 +1,40 @@
+{
+  "name": "create-maha-stack",
+  "version": "1.0.0",
+  "description": "Scaffold high-performance monorepos — Modern Perf or Enterprise Scale",
+  "type": "module",
+  "bin": {
+    "create-maha-stack": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "eta": "^4.5.1",
+    "execa": "^9.6.1",
+    "figlet": "^1.11.0",
+    "gradient-string": "^3.0.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^25.6.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@<%= it.projectName.toLowerCase().replace(/[^a-z0-9]/g, '-') %>/shared",
+  "version": "0.0.1",
+  "description": "Shared utilities, DTOs, and types for <%= it.projectName %>",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests specified\""
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}

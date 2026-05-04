@@ -1,0 +1,21 @@
+{
+  "name": "@<%= it.projectName.toLowerCase().replace(/[^a-z0-9]/g, '-') %>/design-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "tailwindcss": "^4.0.9"
+  }
+}

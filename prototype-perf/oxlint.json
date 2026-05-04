@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/refs/heads/main/crates/oxc_linter/schema.json",
+  "rules": {
+    "correctness": {
+      "no-unused-vars": "error"
+    },
+    "style": {
+      "no-var": "error"
+    }
+  }
+}

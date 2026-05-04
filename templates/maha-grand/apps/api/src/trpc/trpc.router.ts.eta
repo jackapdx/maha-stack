@@ -1,0 +1,171 @@
+import { initTRPC } from '@trpc/server';
+import { z } from 'zod';
+
+const t = initTRPC.create();
+const publicProcedure = t.procedure;
+const router = t.router;
+
+// Mock database
+const users = [
+  { id: '1', name: 'Demo User', email: 'demo@example.com', role: 'user' },
+  { id: '2', name: 'Admin User', email: 'admin@example.com', role: 'admin' },
+];
+
+const healthCheck = {
+  status: 'healthy',
+  uptime: 123456,
+  timestamp: new Date().toISOString(),
+};
+
+export const appRouter = router({
+  // System endpoints
+  health: publicProcedure.query(() => {
+    return {
+      ...healthCheck,
+      project: '<%= it.projectName %>',
+      architect: '<%= it.author %>',
+    };
+  }),
+
+  hello: publicProcedure
+    .input(z.object({ name: z.string().optional() }))
+    .query(({ input }) => {
+      return {
+        greeting: `Hello ${input?.name ?? 'Maha-Grand'}!`,
+        project: '<%= it.projectName %>',
+        architect: '<%= it.author %>',
+        timestamp: new Date().toISOString(),
+      };
+    }),
+
+  // User endpoints
+  users: {
+    list: publicProcedure.query(() => {
+      return users.map(({ id, name, email, role }) => ({ id, name, email, role }));
+    }),
+
+    get: publicProcedure
+      .input(z.object({ id: z.string() }))
+      .query(({ input }) => {
+        const user = users.find(u => u.id === input.id);
+        if (!user) throw new Error('User not found');
+        return user;
+      }),
+
+    create: publicProcedure
+      .input(
+        z.object({
+          name: z.string().min(1),
+          email: z.string().email(),
+          role: z.enum(['user', 'admin']),
+        }),
+      )
+      .mutation(({ input }) => {
+        const newUser = {
+          id: String(users.length + 1),
+          ...input,
+        };
+        users.push(newUser);
+        return newUser;
+      }),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.string(),
+          name: z.string().optional(),
+          email: z.string().email().optional(),
+          role: z.enum(['user', 'admin']).optional(),
+        }),
+      )
+      .mutation(({ input }) => {
+        const index = users.findIndex(u => u.id === input.id);
+        if (index === -1) throw new Error('User not found');
+        
+        users[index] = {
+          ...users[index],
+          ...input,
+        };
+        
+        return users[index];
+      }),
+
+    delete: publicProcedure
+      .input(z.object({ id: z.string() }))
+      .mutation(({ input }) => {
+        const index = users.findIndex(u => u.id === input.id);
+        if (index === -1) throw new Error('User not found');
+        
+        users.splice(index, 1);
+        return { success: true, message: 'User deleted' };
+      }),
+  },
+
+  // Auth endpoints
+  auth: {
+    login: publicProcedure
+      .input(
+        z.object({
+          email: z.string().email(),
+          password: z.string().min(6),
+        }),
+      )
+      .mutation(({ input }) => {
+        const user = users.find(u => u.email === input.email);
+        
+        if (!user) {
+          throw new Error('Invalid credentials');
+        }
+        
+        return {
+          user: { ...user, password: undefined },
+          token: 'mock-jwt-token',
+          expiresIn: '7d',
+        };
+      }),
+
+    register: publicProcedure
+      .input(
+        z.object({
+          name: z.string().min(1),
+          email: z.string().email(),
+          password: z.string().min(6),
+        }),
+      )
+      .mutation(({ input }) => {
+        const existingUser = users.find(u => u.email === input.email);
+        
+        if (existingUser) {
+          throw new Error('User already exists');
+        }
+        
+        const newUser = {
+          id: String(users.length + 1),
+          name: input.name,
+          email: input.email,
+          role: 'user' as const,
+        };
+        
+        users.push(newUser);
+        
+        return {
+          user: newUser,
+          token: 'mock-jwt-token',
+          expiresIn: '7d',
+        };
+      }),
+  },
+
+  // Utility endpoints
+  metrics: publicProcedure.query(() => {
+    return {
+      users: users.length,
+      activeUsers: users.filter(u => u.role === 'user').length,
+      admins: users.filter(u => u.role === 'admin').length,
+      uptime: healthCheck.uptime,
+      memoryUsage: process.memoryUsage().heapUsed / 1024 / 1024,
+    };
+  }),
+});
+
+export type AppRouter = typeof appRouter;
