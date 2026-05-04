@@ -40,6 +40,13 @@
 - **Reference Project**: Use the `/hh` or `/amm` directories for debugging complex template rendering issues.
 
 ## AI Optimization
-- The CLI is designed to be "Agent-Friendly." 
+- The CLI is designed to be "Agent-Friendly."
 - When generating files, prioritize readability and structural clarity.
 - Consolidation of logic into clean abstractions is preferred over threading state across layers.
+
+## Project State
+- **npm Package**: `create-maha-stack` (published to https://www.npmjs.com/package/create-maha-stack)
+- **Git Remote**: `https://github.com/jackapdx/maha-stack.git`
+- **Default Branch**: `main` — stable releases (v1.0.0)
+- **Develop Branch**: `develop` — ongoing work; merge to `main` on release
+- **Registry**: npmjs.org (authenticated as `adpx`)
