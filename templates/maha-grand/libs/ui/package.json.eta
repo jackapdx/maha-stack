@@ -1,0 +1,16 @@
+{
+  "name": "@<%= it.projectName.toLowerCase().replace(/[^a-z0-9]/g, '-') %>/ui",
+  "version": "0.0.1",
+  "description": "Angular UI components powered by Maha Design Tokens",
+  "peerDependencies": {
+    "@angular/core": ">=21.0.0",
+    "@angular/common": ">=21.0.0",
+    "@<%= it.projectName.toLowerCase().replace(/[^a-z0-9]/g, '-') %>/design-tokens": "workspace:*"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/index.ts"
+    },
+    "dest": "../../dist/libs/ui"
+  }
+}

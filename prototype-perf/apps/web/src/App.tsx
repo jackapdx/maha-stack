@@ -1,0 +1,149 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
+import { Button } from 'ui';
+import { trpc, trpcClient } from './trpc.js';
+import './styles/global.css';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false, retry: 1 },
+  },
+});
+
+/* ── Sections ── */
+
+function Navbar() {
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-200">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" className="flex items-center gap-2 text-lg font-bold text-surface-900">
+          <span className="text-maha-600">🔱</span>
+          {/* prototype-perf */}
+          {import.meta.env.VITE_PROJECT_NAME || 'prototype-perf'}
+        </a>
+        <div className="flex items-center gap-6">
+          <a href="#features" className="text-sm text-surface-600 hover:text-maha-700 transition-maha">Features</a>
+          <a href="#docs" className="text-sm text-surface-600 hover:text-maha-700 transition-maha">Docs</a>
+          <Button variant="primary" size="sm">Get Started</Button>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section
+      className="min-h-[90vh] flex items-center justify-center px-4 pt-16"
+      style={{ background: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 30%, #FFE082 60%, #FFD54F 100%)' }}
+    >
+      <div className="text-center max-w-3xl animate-maha-slide-up">
+        <div className="text-5xl mb-6">🔱</div>
+        <h1 className="text-5xl sm:text-6xl font-bold text-surface-900 mb-4 tracking-tight">
+          <span className="bg-gradient-to-r from-maha-600 via-maha-700 to-maha-800 bg-clip-text text-transparent">
+            Maha Stack
+          </span>
+        </h1>
+        <p className="text-xl text-surface-700 mb-2 font-medium">The "Great" Stack Generator</p>
+        <p className="text-surface-500 mb-8 text-base">High-performance monorepos, M4-optimized</p>
+        <div className="flex items-center justify-center gap-4">
+          <Button variant="primary" size="lg">Get Started</Button>
+          <Button variant="outline" size="lg">Documentation</Button>
+        </div>
+        <div className="mt-12 grid grid-cols-3 gap-4 max-w-sm mx-auto text-center">
+          {['⚡', '🏗️', '🤖'].map((icon, i) => (
+            <div key={i} className="bg-white/60 backdrop-blur rounded-lg p-4 animate-maha-fade-in" style={{ animationDelay: `${i * 150}ms` }}>
+              <div className="text-2xl font-bold text-surface-900">{icon}</div>
+              <div className="text-xs text-surface-500 mt-1">{['Speed', 'Scale', 'AI-Ready'][i]}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Features() {
+  const items = [
+    {
+      icon: '⚡',
+      title: 'Maha-Perf',
+      desc: 'Modern speed stack — Hono + React 19 + Arktype, optimized for M4 MacBook Air with Bun runtime.',
+      tag: 'Performance',
+    },
+    {
+      icon: '🏗️',
+      title: 'Maha-Grand',
+      desc: 'Enterprise scale — NestJS + Angular 21 + Zod with Nx monorepo and zoneless change detection.',
+      tag: 'Enterprise',
+    },
+    {
+      icon: '🤖',
+      title: 'AI-First Design',
+      desc: 'Every project ships with CLAUDE.md, .geminiignore, and agent-friendly structural conventions.',
+      tag: 'Agentic',
+    },
+  ];
+
+  return (
+    <section id="features" className="py-24 px-4 bg-surface-50">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-surface-900 mb-4">
+            Two Paths, One <span className="text-maha-700">Foundation</span>
+          </h2>
+          <p className="text-surface-500 max-w-2xl mx-auto">
+            Choose your stack, share the design system. Both paths share the same UI tokens and component CSS.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {items.map((item, i) => (
+            <div key={i} className="mha-card animate-maha-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
+              <div className="mha-card-body">
+                <div className="text-3xl mb-4">{item.icon}</div>
+                <h3 className="mha-card-title mb-2">{item.title}</h3>
+                <span className="mha-badge mha-badge-sm mha-badge-primary">{item.tag}</span>
+                <p className="text-sm text-surface-500 mt-3 leading-relaxed">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-white border-t border-surface-200 py-8 px-4">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-2 text-sm text-surface-500">
+          <span className="text-maha-600">🔱</span>
+          © {new Date().getFullYear()} Maha Stack — MIT License
+        </div>
+        <div className="flex items-center gap-6 text-sm text-surface-400">
+          <a href="#" className="hover:text-surface-600 transition-maha">GitHub</a>
+          <a href="#" className="hover:text-surface-600 transition-maha">npm</a>
+          <a href="#" className="hover:text-surface-600 transition-maha">Docs</a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ── App ── */
+
+export default function App() {
+  return (
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <div className="min-h-screen flex flex-col">
+          <Navbar />
+          <Hero />
+          <Features />
+          <Footer />
+        </div>
+      </QueryClientProvider>
+    </trpc.Provider>
+  );
+}
