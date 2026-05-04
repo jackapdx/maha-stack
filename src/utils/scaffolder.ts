@@ -1,10 +1,26 @@
-import { resolve, dirname, join } from 'node:path';
+import { resolve, dirname, join, sep, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
-import { copyFile, cp, mkdir } from 'node:fs/promises';
+import { copyFile, cp, mkdir, readdir } from 'node:fs/promises';
 import type { StackType } from '../types/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Filter for cp: exclude node_modules and .git/ directories by checking
+ * only the relative path segments (inside the source tree), not the
+ * absolute path (which may itself be under node_modules/ when installed).
+ */
+function createSafeFilter(baseSource: string) {
+  return (src: string) => {
+    const rel = relative(baseSource, src);
+    // If src is the base directory itself, the relative path is "" — always copy it
+    if (rel === '') return true;
+    const segments = rel.split(sep);
+    // Exclude entries where any relative-path segment is 'node_modules' or '.git'
+    return !segments.some((seg) => seg === 'node_modules' || seg === '.git');
+  };
+}
 
 function getTemplatesRoot() {
   // In development, __dirname is project_root/src/utils
@@ -45,8 +61,18 @@ export async function scaffoldTemplate(
   await cp(source, projectDir, { 
     recursive: true,
     force: true,
-    filter: (src) => !src.includes('node_modules') && !src.includes('.git')
+    filter: createSafeFilter(source),
   });
+
+  // Verify that the copy actually produced files
+  const copiedEntries = await readdir(projectDir, { withFileTypes: true });
+  if (copiedEntries.length === 0) {
+    // cp didn't throw but produced no output — this is a critical failure
+    throw new Error(
+      `Template scaffold failed: no files were copied from ${source} to ${projectDir}. ` +
+      'Please check disk space and permissions.'
+    );
+  }
 
   // Copy shared UI design tokens (framework-agnostic, works for both stacks)
   const sharedUiSource = join(templatesRoot, 'shared-ui');
@@ -58,7 +84,7 @@ export async function scaffoldTemplate(
     await cp(sharedUiSource, sharedUiDest, {
       recursive: true,
       force: true,
-      filter: (src) => !src.includes('node_modules'),
+      filter: createSafeFilter(sharedUiSource),
     });
   }
 
