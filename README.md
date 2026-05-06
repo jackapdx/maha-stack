@@ -2,9 +2,15 @@
 
 🚀 **The "Great" Stack Generator**
 
-A high-performance project generator designed for modern Full Stack Developers. Named after the Pali word for "Great/Grand," `create-maha-stack` is optimized for M4 MacBook Air architecture and high-velocity engineering.
+A high-performance project generator designed for modern Full Stack Developers. Named after the Pali word for "Great/Grand," `create-maha-stack` is built for high-velocity engineering.
 
 ## Quick Start
+
+```bash
+npm i -g create-maha-stack
+```
+
+Then scaffold a project:
 
 ```bash
 npx create-maha-stack
@@ -34,7 +40,6 @@ bun x create-maha-stack
 
 ## Key Features
 - 🔱 **Pali-Inspired Aesthetic:** Gold-to-orange gradient visual identity.
-- ⚡ **M4 Optimized:** Multi-core parallel template processing.
 - 🤖 **AI-Ready:** Pre-configured with `CLAUDE.md` and `.geminiignore`.
 - 📦 **Onboarding Support:** Optional "Intern Onboarding" module with `CONTRIBUTING.md` and commitlint.
 

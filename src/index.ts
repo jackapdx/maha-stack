@@ -86,6 +86,9 @@ async function main() {
   console.log('\n' + mahaGradient.multiline(title));
   console.log(pc.bold(pc.yellow('  The "Great" Stack Generator')) + '\n');
 
+  // Fire a non-blocking background update check while the user fills out prompts
+  const updateCheck = checkForUpdate(VERSION).catch(() => null);
+
   // 2. Collection
   const config = await collectConfig();
   if (!config) {
@@ -136,6 +139,14 @@ async function main() {
     s.stop('Repository ready');
 
     // 4. Outro
+    const update = await updateCheck;
+    if (update) {
+      clack.log.warn(
+        pc.yellow(`Update available: v${update.current} → v${update.latest}. `) +
+        pc.dim(`Run ${pc.bold('create-maha-stack --self-update')} to upgrade.`),
+      );
+    }
+
     clack.note(
       [
         `${pc.bold('cd')} ${config.projectName}`,
