@@ -8,18 +8,21 @@ import { scaffoldTemplate } from './utils/scaffolder.js';
 import { renderTemplates } from './utils/renderer.js';
 import { initGit } from './utils/git.js';
 import { installDependencies, isPackageManagerAvailable } from './utils/runner.js';
+import { checkForUpdate, performSelfUpdate } from './utils/updater.js';
 import type { TemplateContext } from './types/index.js';
+import packageJson from '../package.json' with { type: 'json' };
 
-const VERSION = '1.0.0';
+const VERSION = packageJson.version;
 
 function showHelp() {
   console.log(`
 ${pc.bold(pc.yellow('create-maha-stack'))} ${pc.dim(`v${VERSION}`)}
 
 ${pc.bold('Usage:')}
-  npx create-maha-stack             Start the interactive project generator
-  npx create-maha-stack --help      Show this help message
-  npx create-maha-stack --version   Show version number
+  npx create-maha-stack               Start the interactive project generator
+  npx create-maha-stack --help        Show this help message
+  npx create-maha-stack --version     Show version number
+  npx create-maha-stack --self-update Update to the latest version
 
 ${pc.bold('Stacks:')}
   ${pc.yellow('maha-perf')}   Modern speed: Hono + React 19 + Zod | Bun Monorepo
@@ -43,6 +46,36 @@ async function main() {
   }
   if (args.includes('--version') || args.includes('-v')) {
     showVersion();
+    process.exit(0);
+  }
+  if (args.includes('--self-update')) {
+    console.log(pc.bold(pc.yellow('create-maha-stack')) + pc.dim(` self-update\n`));
+    try {
+      const result = await checkForUpdate(VERSION);
+      if (!result) {
+        console.log(pc.green(`\nAlready up to date! v${VERSION} is the latest version.`));
+        process.exit(0);
+      }
+      console.log(`${pc.dim('Current:')} v${result.current}`);
+      console.log(`${pc.green('Latest: ')} v${result.latest}\n`);
+
+      const confirm = await clack.confirm({
+        message: `Update create-maha-stack to v${result.latest}?`,
+      });
+      if (clack.isCancel(confirm) || !confirm) {
+        console.log(pc.dim('Update skipped.'));
+        process.exit(0);
+      }
+
+      const s = clack.spinner();
+      s.start('Updating create-maha-stack…');
+      await performSelfUpdate();
+      s.stop(`Updated to v${result.latest}`);
+      clack.log.success(`create-maha-stack is now at v${result.latest}`);
+    } catch (err) {
+      console.log(pc.red(err instanceof Error ? err.message : String(err)));
+      process.exit(1);
+    }
     process.exit(0);
   }
 
