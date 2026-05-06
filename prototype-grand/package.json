@@ -80,6 +80,16 @@
       "msgpackr-extract",
       "nx",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "tar": ">=7.5.11",
+      "axios": ">=1.15.2",
+      "brace-expansion": ">=5.0.5",
+      "yaml": ">=2.8.3",
+      "follow-redirects": ">=1.16.0",
+      "postcss": ">=8.5.10",
+      "ip-address": ">=10.1.1",
+      "@tootallnate/once": ">=3.0.1"
+    }
   }
 }
