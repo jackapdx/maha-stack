@@ -39,32 +39,12 @@ bun x create-maha-stack
 - **Testing:** Isolated structure (No TestBed) for faster unit tests.
 
 ## Key Features
-- 🔱 **Pali-Inspired Aesthetic:** Gold-to-orange gradient visual identity.
-- 🤖 **AI-Ready:** Pre-configured with `CLAUDE.md` and `.geminiignore`.
-- 📦 **Onboarding Support:** Optional "Intern Onboarding" module with `CONTRIBUTING.md` and commitlint.
-
-## Technical Specifications
-- **Language:** TypeScript (ESM)
-- **Template Engine:** Eta
-- **Fetcher:** Local high-performance source copying
-- **UI:** Clack Prompts
-
-## Development
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/create-maha-stack.git
-cd create-maha-stack
-
-# Install dependencies
-npm install
-
-# Run in development mode
-npm run dev
-
-# Build the project
-npm run build
-```
+- 🔱 **Two Curated Stacks** — Maha-Perf for speed (Bun + Hono + React 19) or Maha-Grand for scale (Nx + NestJS + Angular 21).
+- 🧩 **Interactive Setup** — guided prompts for project name, author, stack, and package manager. No CLI flags to memorize.
+- 📦 **Auto-Install & Git Init** — dependencies installed and repository initialized before you even `cd` in.
+- 🤖 **AI-Ready** — every generated project includes `CLAUDE.md` and `.geminiignore` for agentic workflows.
+- 🔄 **Self-Update** — background version check notifies you when an update is available. Run `create-maha-stack --self-update` to upgrade in place.
+- 📘 **Onboarding Mode** — optional `CONTRIBUTING.md` and commitlint setup for team projects.
 
 ## License
 MIT
