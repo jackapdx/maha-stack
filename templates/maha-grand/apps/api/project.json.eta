@@ -24,7 +24,8 @@
       },
       "configurations": {
         "development": {
-          "buildTarget": "api:build:development"
+          "buildTarget": "api:build:development",
+          "inspect": false
         },
         "production": {
           "buildTarget": "api:build:production"
