@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun run --cwd packages/shared build && bun run --cwd packages/ui build && concurrently --names \"shared,ui,api,web\" --prefix-colors \"blue,magenta,cyan,green\" --hide \"shared,ui\" \"bun run --cwd packages/shared dev\" \"bun run --cwd packages/ui dev\" \"bun run --cwd apps/api dev\" \"bun run --cwd apps/web dev\"",
-    "build": "bun run --cwd packages/shared build && bun run --cwd packages/ui build && bun run --cwd apps/api build && bun run --cwd apps/web build",
-    "test": "bun run --cwd apps/api test 2>/dev/null || true && bun run --cwd apps/web test",
-    "lint": "oxlint",
-    "format": "oxfmt .",
-    "lint:fix": "oxlint --fix",
-    "typecheck": "bun run --cwd packages/shared typecheck && bun run --cwd packages/ui typecheck && bun run --cwd apps/api typecheck && bun run --cwd apps/web typecheck",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "lint:fix": "turbo run lint:fix",
+    "typecheck": "turbo run typecheck",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "prepare": "husky"
@@ -19,9 +19,8 @@
     "packages/*"
   ],
   "devDependencies": {
+    "turbo": "^2.5.0",
     "oxlint": "^1.62.0",
-    "oxfmt": "^0.47.0",
-    "concurrently": "^9.1.0",
     "husky": "^9.1.7",
     "@types/node": "^22.13.1",
     "@types/ws": "^8.5.14"
