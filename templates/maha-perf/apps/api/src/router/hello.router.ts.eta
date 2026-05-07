@@ -8,7 +8,7 @@ export const helloRouter = router({
       project: '<%= it.projectName %>',
       architect: '<%= it.author %>',
       timestamp: new Date().toISOString(),
-      stack: ['React 19', 'Vite', 'Hono', 'tRPC', 'TypeScript', 'TanStack Query'],
+      stack: ['Svelte 5', 'Vite 8', 'Hono', 'tRPC', 'TypeScript', 'ArkType', 'Turborepo'],
     };
   }),
   health: loggedProcedure.query(() => {
