@@ -1,21 +1,23 @@
-import { createTRPCReact } from '@trpc/react-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from 'api';
 
-/**
- * tRPC hooks for React components (TanStack Query integration).
- * Used inside .tsx components with useQuery/useMutation.
- */
-export const trpc = createTRPCReact<AppRouter>();
+/** Safely resolve the API URL from Vite env vars. */
+function getApiUrl(): string {
+  try {
+    return import.meta.env.VITE_API_URL || 'http://localhost:3000/trpc';
+  } catch {
+    return 'http://localhost:3000/trpc';
+  }
+}
 
 /**
- * Standalone tRPC client (no React hook dependency).
- * Used for non-reactive API calls or outside React components.
+ * Standalone tRPC client.
+ * Use this for API calls from Svelte components or vanilla TS code.
  */
-export const trpcClient = createTRPCClient<AppRouter>({
+export const trpc = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: (import.meta as any).env?.VITE_API_URL || 'http://localhost:3000/trpc',
+      url: getApiUrl(),
     }),
   ],
 });
