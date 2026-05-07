@@ -12,6 +12,7 @@
     }
   },
   "scripts": {
+    "build": "echo 'No build required'",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
