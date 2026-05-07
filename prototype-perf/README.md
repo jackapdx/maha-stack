@@ -4,12 +4,11 @@ A high-performance full-stack application built with modern web technologies opt
 
 ## Architecture
 
-- **Frontend**: React 19 + Vite + TypeScript
+- **Frontend**: Svelte 5 + Vite 8 + TypeScript
 - **Backend**: Hono + tRPC + TypeScript
-- **Validation**: Zod
-- **State Management**: TanStack Query
+- **Validation**: ArkType
+- **Monorepo**: Turborepo + Bun workspaces
 - **Linting**: Oxlint
-- **Package Manager**: Bun
 - **Containerization**: Docker
 
 ## Getting Started
@@ -26,7 +25,7 @@ bun install
 
 ### Development
 ```bash
-# Start all services
+# Start all services via Turborepo
 bun dev
 
 # Or start individually
@@ -68,23 +67,24 @@ bun test
 ```
 prototype-perf/
 ├── apps/
-│   ├── web/          # React frontend
+│   ├── web/          # Svelte frontend
 │   └── api/          # Hono backend
 ├── packages/
 │   ├── shared/       # Shared types and utilities
 │   └── ui/           # Shared UI components
+├── turbo.json
 ├── docker-compose.yml
 └── oxlint.json
 ```
 
 ## Features
 
-- ⚡ **Blazing Fast**: Vite + Hono optimized builds
+- ⚡ **Blazing Fast**: Vite 8 + Hono optimized builds
 - 🔒 **Type Safety**: Full TypeScript with tRPC end-to-end types
-- 🎨 **Modern UI**: React 19 with latest features
+- 🎨 **Modern UI**: Svelte 5 with runes reactivity
 - 🐳 **Container Ready**: Docker configuration included
-- 📦 **Monorepo**: PNPM workspaces for code sharing
-- ✅ **Quality**: Oxlint for linting
+- 📦 **Monorepo**: Bun workspaces orchestrated by Turborepo
+- ✅ **Quality**: Oxlint for instant linting
 
 ## API Documentation
 

@@ -26,10 +26,10 @@ bun x create-maha-stack
 
 ### 1. Maha-Perf (Modern Speed)
 **Extreme speed and lightweight footprint.**
-- **Architecture:** Bun Monorepo
-- **Stack:** Hono (Backend) + React 19/Vite (Frontend) + tRPC + TanStack Query
+- **Architecture:** Turborepo-powered Bun Monorepo
+- **Stack:** Hono (Backend) + Svelte 5/Vite 8 (Frontend) + tRPC
 - **Validation:** ArkType (100% TypeScript syntax, faster than Zod)
-- **Tooling:** Oxlint + Vite
+- **Tooling:** Turborepo + Oxlint + Vite 8
 
 ### 2. Maha-Grand (Enterprise Scale)
 **Scalable architecture for large-scale "Grand" applications.**
@@ -39,7 +39,7 @@ bun x create-maha-stack
 - **Testing:** Isolated structure (No TestBed) for faster unit tests.
 
 ## Key Features
-- 🔱 **Two Curated Stacks** — Maha-Perf for speed (Bun + Hono + React 19) or Maha-Grand for scale (Nx + NestJS + Angular 21).
+- 🔱 **Two Curated Stacks** — Maha-Perf for speed (Turborepo + Bun + Hono + Svelte 5) or Maha-Grand for scale (Nx + NestJS + Angular 21).
 - 🧩 **Interactive Setup** — guided prompts for project name, author, stack, and package manager. No CLI flags to memorize.
 - 📦 **Auto-Install & Git Init** — dependencies installed and repository initialized before you even `cd` in.
 - 🤖 **AI-Ready** — every generated project includes `CLAUDE.md` and `.geminiignore` for agentic workflows.

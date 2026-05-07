@@ -25,7 +25,7 @@ ${pc.bold('Usage:')}
   npx create-maha-stack --self-update Update to the latest version
 
 ${pc.bold('Stacks:')}
-  ${pc.yellow('maha-perf')}   Modern speed: Hono + React 19 + Zod | Bun Monorepo
+  ${pc.yellow('maha-perf')}   Modern speed: Hono + Svelte 5 + ArkType | Turborepo + Bun
   ${pc.yellow('maha-grand')}  Enterprise scale: NestJS + Angular 21 + Zod | PNPM Monorepo
 
 ${pc.bold('Options:')}
@@ -156,7 +156,7 @@ async function main() {
       'Next steps'
     );
 
-    clack.outro(mahaGradient('  May your build be Great. มหาสำเร็จ!  '));
+    clack.outro(mahaGradient('  May your build be Great.  '));
   } catch (err) {
     s.stop('Failed');
     clack.cancel(

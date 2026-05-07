@@ -1,14 +1,15 @@
 # <%= it.projectName %> - Maha-Perf Developer Guide
 
 ## Commands
-- **Dev:** `npm run dev` (Starts both API and Web)
-- **Build:** `npm run build`
+- **Dev:** `bun run dev` (Starts all apps via Turborepo)
+- **Build:** `bun run build` (Turborepo build pipeline)
 
 ## Project Structure
 - `apps/api/`: Hono API + tRPC Server
-- `apps/web/`: React + tRPC Client
+- `apps/web/`: Svelte + tRPC Client
 
 ## Tech Stack
-- Frontend: React 19 + Vite
+- Frontend: Svelte 5 + Vite 8
 - Backend: Hono + tRPC
+- Monorepo: Turborepo + Bun
 - Validation: ArkType

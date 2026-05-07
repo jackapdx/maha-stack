@@ -4,7 +4,7 @@
 `create-maha-stack` is a high-performance, AI-native CLI tool built for modern software engineering. It scaffolds monorepo architectures optimized for both performance and enterprise scale.
 
 ### Stacks
-1. **Maha-Perf**: Optimized for speed. Uses **Hono** (API), **React 19** (Web/Vite), **tRPC v11**, and **Bun**.
+1. **Maha-Perf**: Optimized for speed. Uses **Hono** (API), **Svelte 5** (Web/Vite 8), **tRPC v11**, **Turborepo**, and **Bun**.
 2. **Maha-Grand**: Optimized for scale. Uses **NestJS 11** (API), **Angular 21** (Web/Nx), **tRPC v11**, and **Zoneless Change Detection**.
 
 ## Core Mandates
@@ -25,11 +25,11 @@
   - `utils/scaffolder.ts`: Handles initial file copying.
   - `utils/renderer.ts`: Orchestrates Eta rendering.
 - `templates/`: Base project structures.
-  - `maha-perf/`: Bun + React + Hono templates.
+  - `maha-perf/`: Turborepo + Bun + Svelte + Hono templates.
   - `maha-grand/`: Nx + Angular + NestJS templates.
 
 ## Workflow Rules
-1. **Validation First**: When modifying templates, always verify against the latest framework versions (Angular 21, NestJS 11, React 19).
+1. **Validation First**: When modifying templates, always verify against the latest framework versions (Angular 21, NestJS 11, Svelte 5, Vite 8).
 2. **Path Resolution**: Ensure that `tsconfig.json` mappings in templates correctly resolve workspace packages (`api`, `shared`, `ui`) after renaming.
 3. **Environment Safety**: Browser-side code in templates MUST safely handle `process.env` and `import.meta.env` to prevent runtime crashes.
 4. **CI/CD Integration**: Templates should favor Dockerized builds using Alpine-based images (`oven/bun:1.3-alpine` or `node:20-alpine`).

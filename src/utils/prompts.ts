@@ -38,7 +38,7 @@ export async function collectConfig(): Promise<ProjectConfig | null> {
             {
               value: 'maha-perf' as StackType,
               label: 'Maha-Perf (Modern Speed)',
-              hint: 'Hono + React 19 + Zod | Bun Monorepo',
+              hint: 'Hono + Svelte 5 + ArkType | Turborepo + Bun',
             },
             {
               value: 'maha-grand' as StackType,
