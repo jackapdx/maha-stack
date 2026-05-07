@@ -154,9 +154,9 @@
         &copy; {currentYear} Maha Stack &mdash; MIT License
       </div>
       <div class="flex items-center gap-6 text-sm text-surface-400">
-        <a href="#" class="hover:text-surface-600 transition-maha">GitHub</a>
-        <a href="#" class="hover:text-surface-600 transition-maha">npm</a>
-        <a href="#" class="hover:text-surface-600 transition-maha">Docs</a>
+        <a href="https://github.com/jackapdx/maha-stack" class="hover:text-surface-600 transition-maha">GitHub</a>
+        <a href="https://www.npmjs.com/package/create-maha-stack" class="hover:text-surface-600 transition-maha">npm</a>
+        <a href="https://github.com/jackapdx/maha-stack#readme" class="hover:text-surface-600 transition-maha">Docs</a>
       </div>
     </div>
   </footer>
