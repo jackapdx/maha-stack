@@ -18,13 +18,13 @@ A production-ready enterprise application built with the **Maha-Grand Stack** fe
 
 ### Installation
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
 Start both API and Web applications:
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 - **API Server**: http://localhost:3000
@@ -32,11 +32,11 @@ npm run dev
 
 ### Available Scripts
 ```bash
-npm run build     # Build all applications
-npm run test      # Run all tests
-npm run lint      # Lint all applications
-npm run docker:up  # Start Docker containers
-npm run start    # Start production build
+pnpm run build     # Build all applications
+pnpm run test      # Run all tests
+pnpm run lint      # Lint all applications
+pnpm run docker:up  # Start Docker containers
+pnpm run start    # Start production build
 ```
 
 ## Project Structure
@@ -65,7 +65,7 @@ libs/
 
 ### Development with Docker Compose
 ```bash
-npm run docker:up
+pnpm run docker:up
 ```
 
 Services:
@@ -74,7 +74,7 @@ Services:
 
 ### Production Build
 ```bash
-npm run docker:build
+pnpm run docker:build
 docker-compose up -d
 ```
 
@@ -113,27 +113,27 @@ cp .env.example .env
 
 Run tests for all applications:
 ```bash
-npm run test
+pnpm run test
 ```
 
 Run tests for specific application:
 ```bash
-npx nx test api
-npx nx test web
+pnpm exec nx test api
+pnpm exec nx test web
 ```
 
 ## Code Quality
 
 ### Linting
 ```bash
-npm run lint
+pnpm run lint
 ```
 
 Linting is powered by **Oxlint** — a Rust-based linter that is significantly faster than ESLint.
 
 ### Type Checking
 ```bash
-npm run typecheck
+pnpm run typecheck
 ```
 
 

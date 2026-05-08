@@ -5,26 +5,47 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"],
-      "outputs": ["{projectRoot}/dist", "{projectRoot}/.next", "{projectRoot}/.nuxt"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ],
+      "outputs": [
+        "{projectRoot}/dist",
+        "{projectRoot}/.next",
+        "{projectRoot}/.nuxt"
+      ]
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/oxlint.json"]
+      "inputs": [
+        "default",
+        "{workspaceRoot}/oxlint.json"
+      ]
     },
     "test": {
-      "inputs": ["default", "^production"],
+      "inputs": [
+        "default",
+        "^production"
+      ],
       "cache": true
     },
     "serve": {
       "cache": false
     },
     "typecheck": {
-      "inputs": ["default", "^production"]
+      "inputs": [
+        "default",
+        "^production"
+      ]
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/*.spec.[jt]s",
@@ -59,9 +80,15 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "test", "lint", "typecheck"],
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "typecheck"
+        ],
         "parallel": 3
       }
     }
-  }
+  },
+  "analytics": false
 }

@@ -11,7 +11,7 @@ Welcome to the **prototype-grand** project!
 
 2. Start the development server:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 ## Code Quality
@@ -19,9 +19,9 @@ Welcome to the **prototype-grand** project!
 Before submitting a PR, make sure all checks pass:
 
 ```bash
-npm run lint
-npm run format:check
-npm run test
+pnpm run lint
+pnpm run format:check
+pnpm run test
 ```
 
 ## Commit Convention
