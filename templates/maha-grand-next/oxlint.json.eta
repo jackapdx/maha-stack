@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/refs/heads/main/crates/oxc_linter/source.schema.json",
+  "rules": {
+    "no-console": "warn",
+    "no-unused-vars": "deny",
+    "no-undef": "deny",
+    "typescript": {
+      "no-explicit-any": "warn",
+      "no-unnecessary-type-assertion": "warn"
+    }
+  }
+}

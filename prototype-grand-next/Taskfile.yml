@@ -1,0 +1,199 @@
+version: '3'
+
+output: prefixed
+
+vars:
+  PM: pnpm
+  NX: npx nx
+  APPS:
+    - apps/api
+    - apps/web
+  LIBS:
+    - libs/shared
+    - libs/ui
+    - libs/design-tokens
+  ALL_PROJECTS:
+    sh: "{{.NX}} show projects --json | jq -r '.[]' | tr '\n' ' '"
+
+env:
+  FORCE_COLOR: '1'
+
+tasks:
+  # ─── SETUP ───────────────────────────────────────────────────────
+  install:
+    desc: Install workspace dependencies
+    sources:
+      - package.json
+      - pnpm-lock.yaml
+    generates:
+      - node_modules/.pnpm
+      - apps/api/node_modules
+      - apps/web/node_modules
+    cmds:
+      - "{{.PM}} install --frozen-lockfile"
+    deps:
+      - ensure:pnpm
+
+  # ─── DEVELOPMENT ─────────────────────────────────────────────────
+  dev:
+    desc: Start all projects in development mode
+    aliases: [start]
+    deps: [install]
+    cmds:
+      - "{{.NX}} run-many --target=serve --projects=api,web --parallel=4"
+
+  dev:api:
+    desc: Start the NestJS API server
+    aliases: [api]
+    deps: [install]
+    cmds:
+      - "{{.NX}} serve api"
+
+  dev:web:
+    desc: Start the Angular dev server
+    aliases: [web]
+    deps: [install]
+    cmds:
+      - "{{.NX}} serve web"
+
+  # ─── BUILD ───────────────────────────────────────────────────────
+  build:
+    desc: Build all projects
+    aliases: [b]
+    deps: [install]
+    cmds:
+      - "{{.NX}} run-many --target=build --all"
+    sources:
+      - "{{.APPS}}/src/**/*.ts"
+      - "{{.LIBS}}/src/**/*.ts"
+    generates:
+      - dist/
+
+  build:api:
+    desc: Build the NestJS API
+    deps: [install]
+    cmds:
+      - "{{.NX}} build api"
+
+  build:web:
+    desc: Build the Angular app
+    deps: [install]
+    cmds:
+      - "{{.NX}} build web"
+
+  # ─── TEST ────────────────────────────────────────────────────────
+  test:
+    desc: Run all tests
+    aliases: [t]
+    cmds:
+      - "{{.NX}} run-many --target=test --all"
+
+  test:api:
+    desc: Run API tests
+    cmds:
+      - "{{.NX}} test api"
+
+  test:web:
+    desc: Run web tests
+    cmds:
+      - "{{.NX}} test web"
+
+  test:watch:
+    desc: Run tests in watch mode
+    cmds:
+      - "{{.NX}} test api --watch"
+      - "{{.NX}} test web --watch"
+
+  # ─── CODE QUALITY ────────────────────────────────────────────────
+  lint:
+    desc: Lint all projects with oxlint
+    sources:
+      - "**/*.ts"
+    cmds:
+      - oxlint --deny-warnings
+
+  lint:fix:
+    desc: Lint and auto-fix issues
+    cmds:
+      - oxlint --fix --deny-warnings
+
+  format:
+    desc: Format all code with oxfmt
+    aliases: [fmt]
+    sources:
+      - "**/*.ts"
+      - "**/*.html"
+      - "**/*.json"
+    cmds:
+      - oxfmt .
+
+  format:check:
+    desc: Check formatting without modifying files
+    aliases: [fmtchk]
+    cmds:
+      - oxfmt --check .
+
+  typecheck:
+    desc: Run type-checking on all projects
+    aliases: [tc]
+    cmds:
+      - "{{.NX}} run-many --target=typecheck --all"
+
+  # ─── CLEAN ───────────────────────────────────────────────────────
+  clean:
+    desc: Remove build artifacts and node_modules
+    cmds:
+      - "{{.NX}} reset"
+      - rm -rf apps/api/dist apps/web/dist dist/ tmp/
+
+  clean:deps:
+    desc: Remove node_modules and lockfile
+    cmds:
+      - rm -rf node_modules apps/*/node_modules libs/*/node_modules
+      - rm -f pnpm-lock.yaml
+
+  # ─── DOCKER ──────────────────────────────────────────────────────
+  docker:up:
+    desc: Start Docker services (API + Web)
+    cmds:
+      - docker-compose up -d
+
+  docker:down:
+    desc: Stop and remove Docker services
+    cmds:
+      - docker-compose down
+
+  docker:build:
+    desc: Build Docker images
+    cmds:
+      - docker-compose build
+
+  docker:logs:
+    desc: Tail logs from all services
+    cmds:
+      - docker-compose logs -f
+
+  # ─── CI ──────────────────────────────────────────────────────────
+  ci:
+    desc: Full CI pipeline (install -> lint -> typecheck -> test -> build)
+    aliases: [check]
+    deps: [install]
+    cmds:
+      - task: lint
+      - task: typecheck
+      - task: test
+      - task: build
+
+  # ─── UTILITIES ───────────────────────────────────────────────────
+  ensure:pnpm:
+    internal: true
+    desc: Verify pnpm is installed
+    preconditions:
+      - sh: command -v pnpm >/dev/null 2>&1
+        msg: "pnpm is required. Install it: npm install -g pnpm"
+
+  default:
+    desc: Show available tasks
+    aliases: [help]
+    cmds:
+      - task --list

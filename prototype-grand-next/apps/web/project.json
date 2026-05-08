@@ -1,0 +1,46 @@
+{
+  "name": "web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web/src",
+  "projectType": "application",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "vite build"
+      },
+      "configurations": {
+        "production": {
+          "command": "vite build --mode production"
+        },
+        "development": {
+          "command": "vite build --mode development"
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "vite --port 4200 --strictPort"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "vitest run --passWithNoTests"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "tsc -p tsconfig.app.json --noEmit"
+      }
+    }
+  },
+  "tags": ["scope:web", "type:app"]
+}

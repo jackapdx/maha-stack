@@ -1,0 +1,24 @@
+# <%= it.projectName %> - Experimental Edge Developer Guide
+
+## Commands
+- **Dev:** `npx nx serve <app-name>`
+- **Build:** `npx nx build <app-name>`
+- **Test:** `npx nx test <app-name>`
+- **Lint All:** `pnpm run lint` (Oxlint)
+
+## Project Structure
+- `apps/api/`: NestJS backend
+- `apps/web/`: Angular frontend (Vite 8 + Rolldown)
+- `libs/shared/`: Shared TypeScript libraries/DTOs
+
+## Tech Stack
+- Frontend: Angular 21 (via Vite 8 + Rolldown)
+- Compiler: @oxc-angular/vite (Rust-based, experimental)
+- Backend: NestJS
+- Validation: Zod
+- Workspace: Nx Monorepo
+- Test: Vitest 4
+
+## Experimental Status
+This stack uses @oxc-angular/vite (v0.0.28) — a pre-alpha Rust-based
+Angular compiler by VoidZero. Not recommended for production.
