@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -83,7 +82,7 @@ export class HomeComponent {
     {
       icon: '⚡',
       title: 'Maha-Perf',
-      desc: 'Modern speed stack — Hono + React 19 + Arktype, optimized for M4 MacBook Air with Bun runtime.',
+      desc: 'Modern speed stack — Hono + Svelte 5 + ArkType, optimized for M4 MacBook Air with Bun runtime.',
       tag: 'Performance',
       delay: '0ms',
     },

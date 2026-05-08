@@ -60,13 +60,11 @@
       "executor": "@angular-devkit/build-angular:extract-i18n"
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "polyfills": [],
-        "tsConfig": "apps/web/tsconfig.spec.json",
-        "assets": [],
-        "styles": ["apps/web/src/styles.css"],
-        "scripts": []
+        "jestConfig": "apps/web/jest.config.cjs",
+        "passWithNoTests": true
       }
     }
   },

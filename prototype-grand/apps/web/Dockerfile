@@ -2,14 +2,17 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY nx.json ./
+# Install pnpm globally
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-RUN npm ci
+COPY pnpm-lock.yaml .npmrc ./
+COPY package.json nx.json ./
+
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN npx nx build web --prod
+RUN pnpm exec nx build web --configuration=production
 
 FROM nginx:alpine
 
