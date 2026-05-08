@@ -1,0 +1,162 @@
+# <%= it.projectName %>
+
+> **EXPERIMENTAL**: This project uses the **Maha-Grand-Next Stack** — an experimental tier with Vite 8, Rolldown, and the VoidZero Oxc Angular Compiler. Not recommended for production deployments without thorough testing.
+
+## Overview
+
+A cutting-edge enterprise application built with the **Maha-Grand-Next Stack** featuring:
+- **Angular 21** with Signals and Zoneless architecture
+- **NestJS** for robust API development
+- **Vite 8 + Rolldown** for near-instant builds (10-20x faster than esbuild)
+- **Oxc Angular Compiler** (VoidZero) — Rust-based Angular template compiler
+- **Vitest 4** for fast, Vite-native testing
+- **tRPC** for type-safe API communication
+- **Docker** containerization for consistent deployments
+
+## Getting Started
+
+### Prerequisites
+- Node.js 20+
+- <%= it.packageManager %> installed globally
+- Docker & Docker Compose (optional)
+
+### Installation
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn' : 'pnpm install' %>
+```
+
+### Development
+Start both API and Web applications:
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn' : 'pnpm run' %> dev
+```
+
+- **API Server**: http://localhost:3000
+- **Web Application**: http://localhost:4200
+
+### Available Scripts
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn build' : 'pnpm run build' %>     # Build all applications
+<%= it.packageManager === 'yarn' ? 'yarn test' : 'pnpm run test' %>      # Run all tests
+<%= it.packageManager === 'yarn' ? 'yarn lint' : 'pnpm run lint' %>      # Lint all applications
+<%= it.packageManager === 'yarn' ? 'yarn docker:up' : 'pnpm run docker:up' %>  # Start Docker containers
+<%= it.packageManager === 'yarn' ? 'yarn start' : 'pnpm run start' %>    # Start production build
+```
+
+## Project Structure
+
+```
+apps/
+├── api/                    # NestJS API application
+│   ├── src/
+│   │   ├── app.module.ts  # Main module
+│   │   ├── main.ts        # Entry point
+│   │   └── modules/       # Feature modules
+│   └── Dockerfile         # Container configuration
+├── web/                    # Angular 21 + Vite 8 application
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── app.component.ts
+│   │   │   ├── app.routes.ts
+│   │   │   └── pages/     # Feature pages
+│   ├── vite.config.ts     # Vite 8 + Oxc Angular Compiler config
+│   ├── vitest.config.ts   # Vitest 4 config
+│   └── Dockerfile         # Container configuration
+libs/
+├── shared/                 # Shared utilities and DTOs
+└── ui/                     # Reusable UI components
+```
+
+## Docker Deployment
+
+### Development with Docker Compose
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn docker:up' : 'pnpm run docker:up' %>
+```
+
+Services:
+- **Web**: http://localhost:4200
+- **API**: http://localhost:3000
+
+### Production Build
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn docker:build' : 'pnpm run docker:build' %>
+docker-compose up -d
+```
+
+## Architecture Highlights
+
+### Angular 21 + Vite 8 + Rolldown
+- **Vite 8**: Near-instant HMR and build times via Rolldown (Rust bundler)
+- **Oxc Angular Compiler**: 6-20x faster than Angular CLI, Rust-based template compilation
+- **Signals**: Reactive state management with fine-grained reactivity
+- **Zoneless**: Improved performance without zone.js overhead
+- **Standalone Components**: Modular component architecture
+
+### NestJS API Features
+- **Modular Architecture**: Clean separation of concerns
+- **tRPC Integration**: End-to-end type safety
+- **Validation**: Comprehensive request validation with Zod
+- **Error Handling**: Global exception filters and interceptors
+
+### Shared Libraries
+- **Type Safety**: Shared types between frontend and backend
+- **Validation Schemas**: Centralized validation rules
+- **Utility Functions**: Common business logic and helpers
+
+### Development Tools
+- **Nx Workspace**: Monorepo management with affected projects
+- **Vitest 4**: Vite-native test runner with HMR
+- **Oxlint**: Fast Rust-based linting
+- **Husky**: Git hooks for code quality<% if (it.enableOnboarding) { %>
+- **Oxfmt**: Rust-based formatting
+- **Lint Staged**: Pre-commit checks
+<% } %>
+
+## Environment Configuration
+
+Copy `.env.example` to `.env` and configure:
+```bash
+cp .env.example .env
+```
+
+## Testing
+
+Run tests for all applications:
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn test' : 'pnpm run test' %>
+```
+
+Run tests for specific application:
+```bash
+npx nx test api
+npx nx test web
+```
+
+## Code Quality
+
+### Linting
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn lint' : 'pnpm run lint' %>
+```
+
+Linting is powered by **Oxlint** — a Rust-based linter that is significantly faster than ESLint.
+
+### Type Checking
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn typecheck' : 'pnpm run typecheck' %>
+```
+<% if (it.enableOnboarding) { %>
+### Code Formatting
+```bash
+<%= it.packageManager === 'yarn' ? 'yarn format:check' : 'pnpm run format:check' %>
+<%= it.packageManager === 'yarn' ? 'yarn format:write' : 'pnpm run format:write' %>
+```
+<% } %>
+
+## License
+
+MIT
+```
+
+Generated with ❤️ by Maha-Grand-Next Stack (Experimental)

@@ -27,6 +27,7 @@ ${pc.bold('Usage:')}
 ${pc.bold('Stacks:')}
   ${pc.yellow('maha-perf')}   Modern speed: Hono + Svelte 5 + ArkType | Turborepo + Bun
   ${pc.yellow('maha-grand')}  Enterprise scale: NestJS + Angular 21 + Zod | PNPM Monorepo
+  ${pc.yellow('maha-grand-next')} Edge experimental: NestJS + Angular 21 + Vite 8 + Rolldown | PNPM Monorepo
 
 ${pc.bold('Options:')}
   (All options are configured interactively — no CLI flags needed.)

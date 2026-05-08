@@ -1,4 +1,4 @@
-export type StackType = 'maha-perf' | 'maha-grand';
+export type StackType = 'maha-perf' | 'maha-grand' | 'maha-grand-next';
 export type PackageManager = 'npm' | 'pnpm' | 'bun';
 
 export interface ProjectConfig {

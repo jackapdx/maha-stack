@@ -1,0 +1,6 @@
+import 'zone.js';
+import 'zone.js/testing';
+
+// Vitest + Angular test environment setup
+// The @oxc-angular/vite plugin handles zone.js and Angular testbed initialization.
+// Add any custom test setup here (e.g., mock providers, global stubs).

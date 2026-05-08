@@ -1,0 +1,14 @@
+{
+  "name": "@prototype-grand/shared",
+  "version": "0.0.1",
+  "description": "Shared utilities, DTOs, and types for prototype-grand",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}

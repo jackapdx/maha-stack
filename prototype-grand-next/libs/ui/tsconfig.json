@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "types": []
+  },
+  "angularCompilerOptions": {
+    "enableIvy": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/test.ts", "src/**/test-setup.ts"]
+}

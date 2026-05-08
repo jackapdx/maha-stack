@@ -45,6 +45,11 @@ export async function collectConfig(): Promise<ProjectConfig | null> {
               label: 'Maha-Grand (Enterprise Scale)',
               hint: 'NestJS + Angular 21 + Zod | PNPM Monorepo',
             },
+            {
+              value: 'maha-grand-next' as StackType,
+              label: 'Maha-Grand-Next (Edge)',
+              hint: 'NestJS + Angular 21 + Vite 8 + Rolldown | Experimental',
+            },
           ],
         }),
 
@@ -52,6 +57,17 @@ export async function collectConfig(): Promise<ProjectConfig | null> {
         if (results.stackType === 'maha-perf') {
           clack.log.info(`${pc.cyan('ℹ')} Maha-Perf is locked to ${pc.bold('bun')} for maximum performance.`);
           return Promise.resolve('bun' as PackageManager);
+        }
+        if (results.stackType === 'maha-grand-next') {
+          clack.log.warn(
+            pc.yellow('⚠ Maha-Grand-Next is experimental.\n') +
+            '  - Oxc Angular Compiler is not production-ready (VoidZero, April 2026)\n' +
+            '  - Bundle size regressions reported with Vite 8 + Angular (+8%)\n' +
+            '  - Breaking changes expected in Vite 8.x patch releases\n' +
+            '  - Not recommended for production deployments',
+          );
+          clack.log.info(`${pc.cyan('ℹ')} Maha-Grand-Next is locked to ${pc.bold('pnpm')}.`);
+          return Promise.resolve('pnpm' as PackageManager);
         }
         clack.log.info(`${pc.cyan('ℹ')} Maha-Grand is locked to ${pc.bold('pnpm')} for robust enterprise dependency management.`);
         return Promise.resolve('pnpm' as PackageManager);
