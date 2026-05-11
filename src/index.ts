@@ -20,6 +20,7 @@ ${pc.bold(pc.yellow('create-maha-stack'))} ${pc.dim(`v${VERSION}`)}
 
 ${pc.bold('Usage:')}
   npx create-maha-stack               Start the interactive project generator
+  npx create-maha-stack --dry-run       Scaffold + render templates, skip install
   npx create-maha-stack --help        Show this help message
   npx create-maha-stack --version     Show version number
   npx create-maha-stack --self-update Update to the latest version
@@ -30,7 +31,8 @@ ${pc.bold('Stacks:')}
   ${pc.yellow('maha-grand-next')} Edge experimental: NestJS + Angular 21 + Vite 8 + Rolldown | PNPM Monorepo
 
 ${pc.bold('Options:')}
-  (All options are configured interactively — no CLI flags needed.)
+  --dry-run      Scaffold and render templates only (skip install + git init)
+  (All other project options are configured interactively.)
 `);
 }
 
@@ -41,6 +43,7 @@ function showVersion() {
 async function main() {
   // Handle CLI flags
   const args = process.argv.slice(2);
+  const isDryRun = args.includes('--dry-run');
   if (args.includes('--help') || args.includes('-h')) {
     showHelp();
     process.exit(0);
@@ -131,13 +134,19 @@ async function main() {
     const results = await renderTemplates(projectDir, templateContext);
     s.stop(`Maha stack infused into ${results.length} file(s)`);
 
-    s.start(`Installing dependencies with ${config.packageManager}…`);
-    await installDependencies(projectDir, config.packageManager);
-    s.stop('Dependencies established');
+    if (isDryRun) {
+      clack.log.info(
+        pc.cyan('  Dry run — skipping dependency installation and git init.')
+      );
+    } else {
+      s.start(`Installing dependencies with ${config.packageManager}…`);
+      await installDependencies(projectDir, config.packageManager);
+      s.stop('Dependencies established');
 
-    s.start('Initializing repository…');
-    await initGit(projectDir);
-    s.stop('Repository ready');
+      s.start('Initializing repository…');
+      await initGit(projectDir);
+      s.stop('Repository ready');
+    }
 
     // 4. Outro
     const update = await updateCheck;
@@ -152,7 +161,9 @@ async function main() {
       [
         `${pc.bold('cd')} ${config.projectName}`,
         '',
-        `${pc.dim('Run:')}   ${config.packageManager} run dev`,
+        isDryRun
+          ? `${pc.dim('Run:')}   ${config.packageManager} install && ${config.packageManager} run dev`
+          : `${pc.dim('Run:')}   ${config.packageManager} run dev`,
       ].join('\n'),
       'Next steps'
     );
