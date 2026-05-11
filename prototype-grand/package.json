@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nx run-many --target=serve --projects=api,web",
-    "dev": "nx run-many --target=serve --projects=api,web --parallel=2",
+    "dev": "nx run-many --target=serve --all",
     "build": "nx run-many --target=build --all",
     "test": "nx run-many --target=test --all",
     "lint": "oxlint --deny-warnings",

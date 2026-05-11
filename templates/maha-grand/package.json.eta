@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nx run-many --target=serve --projects=api,web",
-    "dev": "concurrently \"nx serve api\" \"nx serve web\"",
+    "dev": "nx run-many --target=serve --all",
     "build": "nx run-many --target=build --all",
     "test": "nx run-many --target=test --all",
     "lint": "oxlint --deny-warnings",
@@ -63,7 +63,6 @@
     "jest-preset-angular": "^16.1.5",
     "typescript": "^5.8.0",
     "nx": "^22.7.1",
-    "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "oxlint": "^1.63.0"<% if (it.enableOnboarding) { %>,
     "oxfmt": "^0.48.0",
