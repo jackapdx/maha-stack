@@ -9,7 +9,9 @@
     ".": {
       "import": "./src/index.js",
       "types": "./src/index.d.ts"
-    }
+    },
+    "./styles/tokens.css": "./src/styles/tokens.css",
+    "./styles/components.css": "./src/styles/components.css"
   },
   "scripts": {
     "build": "echo 'No build required'",

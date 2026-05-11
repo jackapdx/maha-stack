@@ -59,3 +59,8 @@
     {@render children()}
   {/if}
 </button>
+<!--
+  Maha Button — uses shared design tokens from @prototype-perf/design-tokens.
+  CSS classes are defined in the shared components.css:
+    .mha-btn, .mha-btn-primary, .mha-btn-sm, etc.
+-->
