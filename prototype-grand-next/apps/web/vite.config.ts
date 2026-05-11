@@ -11,6 +11,20 @@ export default defineConfig({
 
   root: '.',
 
+  resolve: {
+    // Force Vite to always resolve Angular packages from the project root
+    // node_modules, preventing pnpm's strict resolution from creating
+    // duplicate module instances (which causes NG0203 at bootstrap).
+    dedupe: [
+      '@angular/core',
+      '@angular/common',
+      '@angular/router',
+      '@angular/platform-browser',
+      '@angular/platform-browser-dynamic',
+      '@angular/compiler',
+    ],
+  },
+
   build: {
     outDir: '../../dist/apps/web',
     emptyOutDir: true,
