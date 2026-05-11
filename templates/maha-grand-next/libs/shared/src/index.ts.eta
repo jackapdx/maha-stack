@@ -5,5 +5,5 @@ export * from './lib/types';
 
 // Re-export commonly used types for convenience
 export type { User, UserRole, ApiResponse, PaginatedResponse, AuthResponse } from './lib/types';
-export { UserRole, Errors, AppError } from './lib/error.dto';
+export { Errors, AppError } from './lib/error.dto';
 export { Logger, validateUuid, generateUuid } from './lib/utility';
