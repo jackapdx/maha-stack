@@ -37,7 +37,7 @@ describe('scaffoldTemplate', () => {
 
     // Nested directories should exist
     expect(existsSync(join(projectDir, 'apps', 'api', 'src', 'index.ts.eta'))).toBe(true);
-    expect(existsSync(join(projectDir, 'apps', 'web', 'src', 'App.tsx.eta'))).toBe(true);
+    expect(existsSync(join(projectDir, 'apps', 'web', 'src', 'App.svelte.eta'))).toBe(true);
     expect(existsSync(join(projectDir, 'packages', 'shared', 'src', 'index.ts.eta'))).toBe(true);
   });
 
