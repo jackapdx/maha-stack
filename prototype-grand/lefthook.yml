@@ -1,0 +1,21 @@
+# Lefthook — fast Git hooks manager
+# https://github.com/evilmartians/lefthook
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      run: oxfmt {staged_files}
+      stage_fixed: true
+    lint:
+      run: oxlint --deny-warnings {staged_files}
+
+commit-msg:
+  commands:
+    conventional:
+      run: |
+        msg=$(head -1 {1})
+        if ! echo "$msg" | grep -qE '^(feat|fix|refactor|test|docs|chore|perf|style|ci|build|revert)(\(.+\))?: .+'; then
+          echo "Commit message must follow conventional commits: type(scope): description"
+          exit 1
+        fi
