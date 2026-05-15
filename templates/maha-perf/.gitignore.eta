@@ -1,6 +1,7 @@
 node_modules
-dist
-.env
-.DS_Store
-*.local
-.turbo
+ dist
+ .env
+ .DS_Store
+ *.local
+ .turbo
+ .lefthook-local/

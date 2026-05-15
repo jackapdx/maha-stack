@@ -12,7 +12,7 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:build": "docker-compose build",
-    "prepare": "husky"<% if (it.enableOnboarding) { %>,
+    "prepare": "lefthook install"<% if (it.enableOnboarding) { %>,
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
     "lint:fix": "oxlint --fix --deny-warnings"<% } %>
@@ -63,10 +63,9 @@
     "jest-preset-angular": "^16.1.5",
     "typescript": "^5.8.0",
     "nx": "^22.7.1",
-    "husky": "^9.1.7",
+    "@evilmartians/lefthook": "^1.11.14",
     "oxlint": "^1.63.0"<% if (it.enableOnboarding) { %>,
-    "oxfmt": "^0.48.0",
-    "lint-staged": "^17.0.4"<% } %>
+    "oxfmt": "^0.48.0"<% } %>
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -12,7 +12,7 @@
     "typecheck": "turbo run typecheck",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "prepare": "husky"
+    "prepare": "lefthook install"
   },
   "workspaces": [
     "apps/*",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "turbo": "^2.9.12",
     "oxlint": "^1.63.0",
-    "husky": "^9.1.7",
+    "@evilmartians/lefthook": "^1.11.14",
     "@types/node": "^22.15.0",
     "@types/ws": "^8.5.14"
   },
