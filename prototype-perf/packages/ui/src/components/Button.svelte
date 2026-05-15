@@ -27,6 +27,11 @@
   const sizeClass = () => `mha-btn-${size}`;
 </script>
 
+<!--
+  Maha Button — uses shared design tokens from @prototype-perf/design-tokens.
+  CSS classes are defined in the shared components.css:
+    .mha-btn, .mha-btn-primary, .mha-btn-sm, etc.
+-->
 <button
   class="mha-btn {variantClass()} {sizeClass()} {className}"
   disabled={rest.disabled || isLoading}
@@ -59,8 +64,3 @@
     {@render children()}
   {/if}
 </button>
-<!--
-  Maha Button — uses shared design tokens from @prototype-perf/design-tokens.
-  CSS classes are defined in the shared components.css:
-    .mha-btn, .mha-btn-primary, .mha-btn-sm, etc.
--->
