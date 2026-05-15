@@ -1,6 +1,7 @@
 node_modules
-dist
-.nx/cache
-.env
-.DS_Store
-*.local
+ dist
+ .nx/cache
+ .env
+ .DS_Store
+ *.local
+ .lefthook-local/
