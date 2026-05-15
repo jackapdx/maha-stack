@@ -1,163 +1,136 @@
 <script lang="ts">
-  import { Button } from 'ui';
   import './styles/global.css';
 
-  let projectName: string = 'prototype-perf';
-  try {
-    projectName =
-      import.meta.env.VITE_PROJECT_NAME || 'prototype-perf';
-  } catch {
-    // env not available in some contexts
-  }
+  let projectName = 'prototype-perf';
 
-  let currentYear = new Date().getFullYear();
+  let apiStatus = $state<'checking' | 'online' | 'offline'>('checking');
 
-  const features = [
-    {
-      icon: '⚡',
-      title: 'Maha-Perf',
-      desc: 'Modern speed stack — Hono + Svelte 5 + Arktype, optimized for M4 MacBook Air with Bun runtime.',
-      tag: 'Performance',
-    },
-    {
-      icon: '🏗️',
-      title: 'Maha-Grand',
-      desc: 'Enterprise scale — NestJS + Angular 21 + Zod with Nx monorepo and zoneless change detection.',
-      tag: 'Enterprise',
-    },
-    {
-      icon: '🤖',
-      title: 'AI-First Design',
-      desc: 'Every project ships with CLAUDE.md, .geminiignore, and agent-friendly structural conventions.',
-      tag: 'Agentic',
-    },
+  $effect(() => {
+    const controller = new AbortController();
+    fetch('/api/trpc/health', { signal: controller.signal })
+      .then((r) => r.ok ? apiStatus = 'online' : apiStatus = 'offline')
+      .catch(() => apiStatus = 'offline');
+    return () => controller.abort();
+  });
+
+  const statusDot = $derived({
+    checking: 'bg-amber-400',
+    online: 'bg-green-500',
+    offline: 'bg-red-400',
+  }[apiStatus]);
+
+  const statusLabel = $derived({
+    checking: 'Checking…',
+    online: 'All systems operational',
+    offline: 'Could not connect',
+  }[apiStatus]);
+
+  const stacks = [
+    { name: 'Svelte 5', icon: '🧩' },
+    { name: 'Vite 8', icon: '⚡' },
+    { name: 'Hono', icon: '🔥' },
+    { name: 'tRPC', icon: '🔗' },
+    { name: 'ArkType', icon: '📐' },
+    { name: 'Bun', icon: '🥟' },
   ];
-
-  const icons = ['⚡', '🏗️', '🤖'];
-  const labels = ['Speed', 'Scale', 'AI-Ready'];
 </script>
 
-<div class="min-h-screen flex flex-col">
-  <!-- Navbar -->
-  <nav
-    class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-200"
-  >
-    <div
-      class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
-    >
+<div class="min-h-screen flex flex-col bg-surface-50 selection:bg-maha-200 selection:text-maha-900">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 border-b border-surface-200/60 bg-surface-50/80 backdrop-blur-xl">
+    <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+      <span class="text-sm font-semibold tracking-tight text-surface-900">{projectName}</span>
       <a
-        href="/"
-        class="flex items-center gap-2 text-lg font-bold text-surface-900"
+        href="https://github.com/jackapdx/maha-stack"
+        class="text-xs text-surface-400 transition-colors hover:text-surface-600"
       >
-        <span class="text-maha-600">&#128305;</span>
-        {projectName}
+        GitHub
       </a>
-      <div class="flex items-center gap-6">
-        <a
-          href="#features"
-          class="text-sm text-surface-600 hover:text-maha-700 transition-maha">Features</a
-        >
-        <a
-          href="#docs"
-          class="text-sm text-surface-600 hover:text-maha-700 transition-maha">Docs</a
-        >
-        <Button variant="primary" size="sm">Get Started</Button>
-      </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- Hero -->
-  <section
-    class="min-h-[90vh] flex items-center justify-center px-4 pt-16"
-    style="background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 30%, #FFE082 60%, #FFD54F 100%)"
-  >
-    <div class="text-center max-w-3xl animate-maha-slide-up">
-      <div class="text-5xl mb-6">&#128305;</div>
-      <h1
-        class="text-5xl sm:text-6xl font-bold text-surface-900 mb-4 tracking-tight"
-      >
-        <span
-          class="bg-gradient-to-r from-maha-600 via-maha-700 to-maha-800 bg-clip-text text-transparent"
-        >
-          Maha Stack
-        </span>
-      </h1>
-      <p class="text-xl text-surface-700 mb-2 font-medium">
-        The "Great" Stack Generator
-      </p>
-      <p class="text-surface-500 mb-8 text-base">
-        High-performance monorepos, M4-optimized
-      </p>
-      <div class="flex items-center justify-center gap-4">
-        <Button variant="primary" size="lg">Get Started</Button>
-        <Button variant="outline" size="lg">Documentation</Button>
-      </div>
-      <div
-        class="mt-12 grid grid-cols-3 gap-4 max-w-sm mx-auto text-center"
-      >
-        {#each icons as icon, i}
-          <div
-            class="bg-white/60 backdrop-blur rounded-lg p-4 animate-maha-fade-in"
-            style="animation-delay: {i * 150}ms"
-          >
-            <div class="text-2xl font-bold text-surface-900">{icon}</div>
-            <div class="text-xs text-surface-500 mt-1">{labels[i]}</div>
-          </div>
-        {/each}
-      </div>
-    </div>
-  </section>
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="flex min-h-[75vh] flex-col items-center justify-center px-6 py-24">
+      <div class="mx-auto max-w-xl text-center">
+        <!-- Status badge -->
+        <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-surface-200/60 bg-white px-4 py-1.5 text-xs text-surface-500 shadow-sm">
+          <span class="relative flex size-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 {statusDot}"></span>
+            <span class="relative inline-flex size-2 rounded-full {statusDot}"></span>
+          </span>
+          {statusLabel}
+        </div>
 
-  <!-- Features -->
-  <section id="features" class="py-24 px-4 bg-surface-50">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-surface-900 mb-4">
-          Two Paths, One <span class="text-maha-700">Foundation</span>
-        </h2>
-        <p class="text-surface-500 max-w-2xl mx-auto">
-          Choose your stack, share the design system. Both paths share the
-          same UI tokens and component CSS.
+        <h1 class="text-4xl font-bold tracking-tight text-surface-900 sm:text-5xl">
+          {projectName}
+        </h1>
+        <p class="mt-4 text-base leading-relaxed text-surface-400">
+          Generated from the Maha stack. Performance-optimized, AI-native, production-ready.
         </p>
+
+        <!-- Stack pills -->
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-2">
+          {#each stacks as s}
+            <span class="inline-flex items-center gap-1.5 rounded-md border border-surface-200/60 bg-white px-3 py-1.5 text-xs font-medium text-surface-500 shadow-sm transition-shadow hover:shadow-md">
+              <span class="text-sm">{s.icon}</span>
+              {s.name}
+            </span>
+          {/each}
+        </div>
       </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        {#each features as item, i}
-          <div
-            class="mha-card animate-maha-fade-in"
-            style="animation-delay: {i * 100}ms"
-          >
-            <div class="mha-card-body">
-              <div class="text-3xl mb-4">{item.icon}</div>
-              <h3 class="mha-card-title mb-2">{item.title}</h3>
-              <span
-                class="mha-badge mha-badge-sm mha-badge-primary"
-              >{item.tag}</span
-              >
-              <p
-                class="text-sm text-surface-500 mt-3 leading-relaxed"
-              >{item.desc}</p
-              >
-            </div>
-          </div>
-        {/each}
-      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="border-t border-surface-200/60"></div>
     </div>
-  </section>
+
+    <!-- Getting Started -->
+    <section class="px-6 py-20">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid gap-6 sm:grid-cols-3">
+          <div class="rounded-xl border border-surface-200/60 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-3 flex size-10 items-center justify-center rounded-lg border border-surface-200/60 bg-surface-50 text-lg">
+              🚀
+            </div>
+            <h3 class="text-sm font-semibold text-surface-900">Start dev</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-surface-400">
+              Run <code class="rounded bg-surface-100 px-1.5 py-0.5 font-mono text-surface-600">bun run dev</code> to launch the full stack.
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface-200/60 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-3 flex size-10 items-center justify-center rounded-lg border border-surface-200/60 bg-surface-50 text-lg">
+              🧩
+            </div>
+            <h3 class="text-sm font-semibold text-surface-900">Add a feature</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-surface-400">
+              Create a tRPC router in <code class="rounded bg-surface-100 px-1.5 py-0.5 font-mono text-surface-600">apps/api/src/router/</code>
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface-200/60 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-3 flex size-10 items-center justify-center rounded-lg border border-surface-200/60 bg-surface-50 text-lg">
+              📦
+            </div>
+            <h3 class="text-sm font-semibold text-surface-900">Design tokens</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-surface-400">
+              Edit shared tokens in <code class="rounded bg-surface-100 px-1.5 py-0.5 font-mono text-surface-600">packages/design-tokens/</code>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-surface-200 py-8 px-4">
-    <div
-      class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
-    >
-      <div class="flex items-center gap-2 text-sm text-surface-500">
-        <span class="text-maha-600">&#128305;</span>
-        &copy; {currentYear} Maha Stack &mdash; MIT License
-      </div>
-      <div class="flex items-center gap-6 text-sm text-surface-400">
-        <a href="https://github.com/jackapdx/maha-stack" class="hover:text-surface-600 transition-maha">GitHub</a>
-        <a href="https://www.npmjs.com/package/create-maha-stack" class="hover:text-surface-600 transition-maha">npm</a>
-        <a href="https://github.com/jackapdx/maha-stack#readme" class="hover:text-surface-600 transition-maha">Docs</a>
-      </div>
+  <footer class="border-t border-surface-200/60 bg-white">
+    <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+      <span class="text-xs text-surface-400">
+        &copy; {new Date().getFullYear()} {projectName}
+      </span>
+      <span class="text-xs text-surface-300">
+        Maha Stack &middot; MIT
+      </span>
     </div>
   </footer>
 </div>
