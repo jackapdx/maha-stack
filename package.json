@@ -1,6 +1,6 @@
 {
   "name": "create-maha-stack",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Scaffold high-performance monorepos — Modern Perf or Enterprise Scale",
   "type": "module",
   "bin": {
