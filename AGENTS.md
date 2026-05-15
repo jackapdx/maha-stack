@@ -1,7 +1,7 @@
 # OpenCode Agent Instructions for create-maha-stack
 
 ## Project Overview
-`create-maha-stack` is a high-performance, AI-native CLI tool that scaffolds monorepo architectures. Version **1.2.2**. Published to npm as `create-maha-stack`.
+`create-maha-stack` is a high-performance, AI-native CLI tool that scaffolds monorepo architectures. Version **1.5.0**. Published to npm as `create-maha-stack`.
 
 ### Stacks
 1. **Maha-Perf**: Speed-optimized. **Hono** (API), **Svelte 5** (Web/Vite 8), **tRPC v11**, **ArkType**, **Turborepo**, **Bun** (locked).
@@ -112,7 +112,7 @@ Because of step 2, **never place design-tokens files in per-stack template direc
 - Consolidation of logic into clean abstractions is preferred over threading state across layers.
 
 ## Project State
-- **npm Package**: `create-maha-stack` v1.2.2 (https://www.npmjs.com/package/create-maha-stack)
+- **npm Package**: `create-maha-stack` v1.5.0 (https://www.npmjs.com/package/create-maha-stack)
 - **Git Remote**: `https://github.com/jackapdx/maha-stack.git`
 - **Default Branch**: `main` — stable releases
 - **Develop Branch**: `develop` — ongoing work; merge to `main` on release
