@@ -1,104 +1,119 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed, OnDestroy } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [CommonModule],
   template: `
-    <!-- Hero -->
-    <section
-      class="min-h-[90vh] flex items-center justify-center px-4"
-      style="background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 30%, #FFE082 60%, #FFD54F 100%)"
-    >
-      <div class="text-center max-w-3xl animate-maha-slide-up">
-        <div class="text-5xl mb-6">🔱</div>
-        <h1 class="text-5xl sm:text-6xl font-bold text-surface-900 mb-4 tracking-tight">
-          <span class="bg-gradient-to-r from-maha-600 via-maha-700 to-maha-800 bg-clip-text text-transparent">
-            Maha Stack
+    <section class="flex min-h-[75vh] flex-col items-center justify-center px-6 py-24">
+      <div class="mx-auto max-w-xl text-center">
+        <!-- Status badge -->
+        <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-surface-200/60 bg-white px-4 py-1.5 text-xs text-surface-500 shadow-sm">
+          <span class="relative flex size-2">
+            @if (apiStatus() === 'checking') {
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 bg-amber-400"></span>
+              <span class="relative inline-flex size-2 rounded-full bg-amber-400"></span>
+            } @else if (apiStatus() === 'online') {
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 bg-green-500"></span>
+              <span class="relative inline-flex size-2 rounded-full bg-green-500"></span>
+            } @else {
+              <span class="relative inline-flex size-2 rounded-full bg-red-400"></span>
+            }
           </span>
-        </h1>
-        <p class="text-xl text-surface-700 mb-2 font-medium">The "Great" Stack Generator</p>
-        <p class="text-surface-500 mb-8 text-base">High-performance monorepos, M4-optimized</p>
-        <div class="flex items-center justify-center gap-4 mb-12">
-          <a href="https://github.com/your-username/create-maha-stack" target="_blank" class="mha-btn mha-btn-primary mha-btn-lg">
-            Get Started
-          </a>
-          <a href="#" class="mha-btn mha-btn-outline mha-btn-lg">
-            Documentation
-          </a>
+          {{ statusLabel() }}
         </div>
-        <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto text-center">
-          @for (item of heroMetrics(); track item.label) {
-            <div
-              class="bg-white/60 backdrop-blur rounded-lg p-4 animate-maha-fade-in"
-              [style.animation-delay]="item.delay"
-            >
-              <div class="text-2xl font-bold text-surface-900">{{ item.icon }}</div>
-              <div class="text-xs text-surface-500 mt-1">{{ item.label }}</div>
-            </div>
+
+        <h1 class="text-4xl font-bold tracking-tight text-surface-900 sm:text-5xl">
+          {{ projectName }}
+        </h1>
+        <p class="mt-4 text-base leading-relaxed text-surface-400">
+          Generated from the Maha stack. Performance-optimized, AI-native, production-ready.
+        </p>
+
+        <!-- Stack pills -->
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-2">
+          @for (s of stacks; track s.name) {
+            <span class="inline-flex items-center gap-1.5 rounded-md border border-surface-200/60 bg-white px-3 py-1.5 text-xs font-medium text-surface-500 shadow-sm transition-shadow hover:shadow-md">
+              <span class="text-sm">{{ s.icon }}</span>
+              {{ s.name }}
+            </span>
           }
         </div>
       </div>
     </section>
 
-    <!-- Features -->
-    <section class="py-24 px-4 bg-surface-50">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold text-surface-900 mb-4">
-            Two Paths, One <span class="text-maha-700">Foundation</span>
-          </h2>
-          <p class="text-surface-500 max-w-2xl mx-auto">
-            Choose your stack, share the design system. Both paths share the same UI tokens and component CSS.
-          </p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-8">
-          @for (item of features(); track item.title) {
-            <div
-              class="mha-card animate-maha-fade-in"
-              [style.animation-delay]="item.delay"
-            >
-              <div class="mha-card-body">
-                <div class="text-3xl mb-4">{{ item.icon }}</div>
-                <h3 class="mha-card-title mb-2">{{ item.title }}</h3>
-                <span class="mha-badge mha-badge-sm mha-badge-primary">{{ item.tag }}</span>
-                <p class="text-sm text-surface-500 mt-3 leading-relaxed">{{ item.desc }}</p>
-              </div>
+    <!-- Divider -->
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="border-t border-surface-200/60"></div>
+    </div>
+
+    <!-- Getting Started -->
+    <section class="px-6 py-20">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid gap-6 sm:grid-cols-3">
+          <div class="rounded-xl border border-surface-200/60 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-3 flex size-10 items-center justify-center rounded-lg border border-surface-200/60 bg-surface-50 text-lg">
+              🚀
             </div>
-          }
+            <h3 class="text-sm font-semibold text-surface-900">Start dev</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-surface-400">
+              Run <code class="rounded bg-surface-100 px-1.5 py-0.5 font-mono text-surface-600">pnpm run dev</code> to launch the full stack.
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface-200/60 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-3 flex size-10 items-center justify-center rounded-lg border border-surface-200/60 bg-surface-50 text-lg">
+              🔌
+            </div>
+            <h3 class="text-sm font-semibold text-surface-900">Add a module</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-surface-400">
+              Generate a NestJS module with <code class="rounded bg-surface-100 px-1.5 py-0.5 font-mono text-surface-600">pnpm nx g @nestjs/schematics:module</code>
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface-200/60 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="mb-3 flex size-10 items-center justify-center rounded-lg border border-surface-200/60 bg-surface-50 text-lg">
+              📦
+            </div>
+            <h3 class="text-sm font-semibold text-surface-900">Design tokens</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-surface-400">
+              Edit shared tokens in <code class="rounded bg-surface-100 px-1.5 py-0.5 font-mono text-surface-600">libs/design-tokens/</code>
+            </p>
+          </div>
         </div>
       </div>
     </section>
   `,
   styles: [],
 })
-export class HomeComponent {
-  heroMetrics = signal([
-    { icon: '⚡', label: 'Speed', delay: '0ms' },
-    { icon: '🏗️', label: 'Scale', delay: '150ms' },
-    { icon: '🤖', label: 'AI-Ready', delay: '300ms' },
-  ]);
+export class HomeComponent implements OnDestroy {
+  projectName = 'prototype-grand-next';
 
-  features = signal([
-    {
-      icon: '⚡',
-      title: 'Maha-Perf',
-      desc: 'Modern speed stack — Hono + Svelte 5 + ArkType, optimized for M4 MacBook Air with Bun runtime.',
-      tag: 'Performance',
-      delay: '0ms',
-    },
-    {
-      icon: '🏗️',
-      title: 'Maha-Grand',
-      desc: 'Enterprise scale — NestJS + Angular 21 + Zod with Nx monorepo and zoneless change detection.',
-      tag: 'Enterprise',
-      delay: '100ms',
-    },
-    {
-      icon: '🤖',
-      title: 'AI-First Design',
-      desc: 'Every project ships with CLAUDE.md, .geminiignore, and agent-friendly structural conventions.',
-      tag: 'Agentic',
-      delay: '200ms',
-    },
-  ]);
+  stacks = [
+    { name: 'Angular 21', icon: '🅰️' },
+    { name: 'NestJS 11', icon: '🛡️' },
+    { name: 'tRPC', icon: '🔗' },
+    { name: 'Zod', icon: '📐' },
+    { name: 'Zoneless', icon: '⚡' },
+    { name: 'Nx', icon: '🏗️' },
+  ];
+
+  apiStatus = signal<'checking' | 'online' | 'offline'>('checking');
+  statusLabel = computed(() => ({
+    checking: 'Checking…',
+    online: 'All systems operational',
+    offline: 'Could not connect',
+  }[this.apiStatus()]));
+
+  private abortController: AbortController | null = null;
+
+  constructor() {
+    this.abortController = new AbortController();
+    fetch('/api/trpc/health', { signal: this.abortController.signal })
+      .then((r) => r.ok ? this.apiStatus.set('online') : this.apiStatus.set('offline'))
+      .catch(() => this.apiStatus.set('offline'));
+  }
+
+  ngOnDestroy() {
+    this.abortController?.abort();
+  }
 }
