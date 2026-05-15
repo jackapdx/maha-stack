@@ -9,77 +9,65 @@
  */
 
 // ── Layout ──
-const _0 = 'min-h-screen flex flex-col flex-grow';
-const _1 = 'flex items-center justify-center justify-between';
-const _2 = 'grid grid-cols-2 grid-cols-3 gap-4 gap-8 gap-6';
-const _3 = 'max-w-6xl max-w-3xl max-w-2xl max-w-sm mx-auto';
-const _4 = 'container mx-auto px-4';
-const _5 = 'w-full h-16';
+const _0 = 'min-h-screen min-h-[70vh] min-h-[75vh] flex flex-col flex-1 flex-grow';
+const _1 = 'flex items-center justify-center justify-between flex-wrap';
+const _2 = 'grid sm:grid-cols-3 gap-2 gap-6';
+const _3 = 'max-w-5xl max-w-2xl max-w-xl max-w-sm mx-auto';
+const _5 = 'h-14';
 
 // ── Spacing ──
-const _6 = 'py-24 py-8 py-6 py-5 py-4 py-3';
-const _7 = 'px-6 px-4 px-3 pt-16 pb-8 mb-16 mb-12 mb-8 mb-6 mb-4 mb-2';
-const _8 = 'mt-12 mt-1 mr-2 ml-3 ml-auto pl-3 pr-10';
-const _9 = 'space-y-6 space-y-4 space-y-3 space-y-1';
+const _6 = 'py-24 py-20 py-6 py-5 py-4 py-3';
+const _7 = 'px-6 px-3 pt-16 pb-8 mb-10 mb-8 mb-6 mb-4 mb-3 mb-2';
+const _8 = 'mt-10 mt-4 mt-3 mt-2 mt-1';
+const _9 = 'p-6 p-4';
 
 // ── Typography ──
 const _10 = 'text-5xl text-4xl text-3xl text-2xl text-xl text-lg text-base text-sm text-xs';
-const _11 = 'font-bold font-medium font-semibold font-normal';
-const _12 = 'leading-relaxed tracking-tight tracking-wider';
-const _13 = 'text-center text-left uppercase';
-
-// ── Colors (standard) ──
-const _14 = 'text-white text-gray-900 text-gray-800 text-gray-700 text-gray-600 text-gray-500 text-gray-400';
-const _15 = 'bg-white bg-gray-200 bg-gray-50';
-const _16 = 'border-gray-200';
+const _11 = 'font-bold font-medium font-semibold';
+const _12 = 'leading-relaxed tracking-tight';
+const _13 = 'text-center';
 
 // ── Colors (Maha theme) ──
 const _17 = 'text-maha-700 text-maha-600';
-const _18 = 'text-surface-900 text-surface-800 text-surface-700 text-surface-600 text-surface-500 text-surface-400';
+const _18 = 'text-surface-900 text-surface-800 text-surface-700 text-surface-600 text-surface-500 text-surface-400 text-surface-300';
 const _19 = 'bg-surface-50 bg-surface-100 bg-surface-200';
 
+// ── Status indicators ──
+const _20 = 'bg-amber-400 bg-green-500 bg-red-400';
+
 // ── Surfaces ──
-const _20 = 'bg-white/80 bg-white/60';
-const _21 = 'backdrop-blur backdrop-blur-md';
+const _21 = 'bg-white bg-surface-50/80 backdrop-blur-xl';
 
 // ── Borders ──
-const _22 = 'border border-t border-b border-surface-200 border-surface-300 rounded-lg rounded-xl rounded-full';
+const _22 = 'border border-t border-surface-200 border-surface-200/60 border-surface-300 rounded-full rounded-xl rounded-lg rounded-md';
 
 // ── Shadows ──
-const _23 = 'shadow-sm shadow';
+const _23 = 'shadow-sm shadow-md';
 
 // ── Interactions ──
-const _24 = 'hover:text-maha-700 hover:text-surface-600 hover:text-surface-700 hover:bg-surface-100 hover:bg-surface-300 hover:border-surface-300';
-const _25 = 'transition-all cursor-pointer';
-
-// ── States ──
-const _26 = 'opacity-50 disabled:opacity-50 disabled:cursor-not-allowed';
-const _27 = 'sr-only';
+const _24 = 'hover:text-surface-600 hover:text-surface-900 hover:shadow-md hover:bg-surface-100';
+const _25 = 'transition-all transition-colors transition-shadow cursor-pointer';
 
 // ── Size utilities ──
-const _28 = 'size-12 size-10 size-6 size-5 size-4';
-
-// ── Overflow ──
-const _29 = 'overflow-hidden';
+const _28 = 'size-10 size-6 size-5 size-4 size-2';
 
 // ── Position ──
-const _30 = 'fixed inset-0 z-50';
+const _30 = 'sticky top-0 z-50';
 
 // ── Animations ──
-const _31 = 'animate-spin animate-pulse';
+const _31 = 'animate-spin animate-ping';
 
-// ── Background ──
-const _32 = 'bg-gradient-to-r from-maha-600 via-maha-700 to-maha-800 bg-clip-text text-transparent';
-const _33 = 'bg-black/40';
+// ── Selection ──
+const _32 = 'selection:bg-maha-200 selection:text-maha-900';
 
-// ── Aspect ratio ──
-const _34 = 'aspect-square';
+// ── Inline flex ──
+const _35 = 'inline-flex';
 
-// ── Flexbox extras ──
-const _35 = 'inline-flex flex-shrink-0 flex-1';
+// ── Code / Mono ──
+const _36 = 'font-mono bg-surface-100 px-1.5 py-0.5';
 
-// ── Scrollbar ──
-const _36 = 'w-10 h-10';
+// ── Responsive ──
+const _37 = 'sm:text-5xl';
 
 // ── Nx/CLI ──
-const _37 = 'router-link-active';
+const _38 = 'router-link-active';
