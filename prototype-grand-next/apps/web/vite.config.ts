@@ -28,6 +28,7 @@ export default defineConfig({
   build: {
     outDir: '../../dist/apps/web',
     emptyOutDir: true,
+    cssMinify: 'esbuild',
   },
 
   server: {
@@ -40,6 +41,7 @@ export default defineConfig({
   },
 
   css: {
+    transformer: 'postcss',
     postcss: './postcss.config.json',
   },
 })
