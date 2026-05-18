@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import { angular } from '@oxc-angular/vite'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     angular({
       tsconfig: './tsconfig.app.json',
       sourceMap: true,
@@ -40,8 +42,5 @@ export default defineConfig({
     port: 4300,
   },
 
-  css: {
-    transformer: 'postcss',
-    postcss: './postcss.config.json',
-  },
+
 })
